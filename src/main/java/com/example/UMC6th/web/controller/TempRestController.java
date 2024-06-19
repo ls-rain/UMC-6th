@@ -2,10 +2,9 @@ package com.example.UMC6th.web.controller;
 
 import com.example.UMC6th.apiPayLoad.ApiResponse;
 import com.example.UMC6th.converter.TempConverter;
-import com.example.UMC6th.service.TempQueryService;
+import com.example.UMC6th.service.TempService.TempQueryService;
 import com.example.UMC6th.web.dto.TempResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

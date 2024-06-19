@@ -1,4 +1,4 @@
-package com.example.UMC6th.service;
+package com.example.UMC6th.service.TempService;
 
 import com.example.UMC6th.apiPayLoad.code.status.ErrorStatus;
 import com.example.UMC6th.apiPayLoad.exception.handler.TempHandler;
