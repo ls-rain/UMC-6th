@@ -7,6 +7,9 @@ import com.example.UMC6th.domain.enums.MissionStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static com.example.UMC6th.domain.enums.MissionStatus.CHALLENGING;
+import static com.example.UMC6th.domain.enums.MissionStatus.COMPLETE;
+
 @Entity
 @Getter
 @Builder
@@ -30,4 +33,10 @@ public class MemberMission extends BaseEntity {
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
+    public void setStatus(MissionStatus status) {
+        if(this.status == CHALLENGING){
+            this.status = COMPLETE;
+
+        }
+    }
 }
