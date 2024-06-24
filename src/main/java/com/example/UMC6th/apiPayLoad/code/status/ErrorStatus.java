@@ -27,7 +27,8 @@ public enum ErrorStatus implements BaseErrorCode {
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이거는 테스트"),
     FOOD_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "FOOD4001", "카테고리가 없습니다"),
     STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE4001", "가게가 없습니다"),
-    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION4001", "미션이 없습니다.");
+    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION4001", "미션이 없습니다."),
+    PAGE_UNDERFLOW(HttpStatus.NOT_ACCEPTABLE, "PAGE4001", "페이지 번호가 0미만입니다.");
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;

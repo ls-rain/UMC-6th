@@ -7,6 +7,7 @@ import com.example.UMC6th.domain.Review;
 import com.example.UMC6th.domain.mapping.MemberMission;
 import com.example.UMC6th.service.MemberService.MemberCommandService;
 import com.example.UMC6th.service.MemberService.MemberQueryService;
+import com.example.UMC6th.validation.annotation.CheckPage;
 import com.example.UMC6th.validation.annotation.ExistMember;
 import com.example.UMC6th.web.dto.MemberRequestDTO;
 import com.example.UMC6th.web.dto.MemberResponseDTO;
@@ -45,8 +46,8 @@ public class MemberRestController {
             @Parameter(name = "memberId", description = "멤버 아이디, path variable 입니다."),
             @Parameter(name = "page", description = "페이지 번호, 0번이 1페이지 입니다.")
     })
-    public ApiResponse<MemberResponseDTO.MemberReviewListDTO> getMemberReviews(@ExistMember@PathVariable("memberId") Long memberId,
-                                                                               @RequestParam(name = "page") Integer page){
+    public ApiResponse<MemberResponseDTO.MemberReviewListDTO> getMemberReviews(@ExistMember @PathVariable("memberId") Long memberId,
+                                                                               @CheckPage @RequestParam(name = "page") Integer page){
         Page<Review> memberReview = memberQueryService.findMemberReview(memberId, page);
         return ApiResponse.onSuccess(MemberConverter.toMemberReviewListDTO(memberReview));
     }
@@ -63,7 +64,7 @@ public class MemberRestController {
             @Parameter(name = "page", description = "페이지 번호, 0번이 1페이지 입니다.")
     })
     public ApiResponse<MemberResponseDTO.MemberMissionListDTO> getMemberProgressMissions(@ExistMember @PathVariable(name = "memberId") Long memberId,
-                                                                                         @RequestParam(name = "page") Integer page){
+                                                                                         @CheckPage @RequestParam(name = "page") Integer page){
         Page<MemberMission> progressMission = memberQueryService.findProgressMission(memberId, page);
         return ApiResponse.onSuccess(MemberConverter.toMemberMissionListDTO(progressMission));
     }
