@@ -37,4 +37,22 @@ public class MemberResponseDTO {
         String body;
         LocalDateTime createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MemberMissionDTO{
+        Integer reward;
+        String storeName;
+        String missionName;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MemberMissionListDTO{
+        List<MemberMissionDTO> memberMissionDTOList;
+    }
 }

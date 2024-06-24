@@ -4,6 +4,7 @@ import com.example.UMC6th.apiPayLoad.ApiResponse;
 import com.example.UMC6th.converter.MemberConverter;
 import com.example.UMC6th.domain.Member;
 import com.example.UMC6th.domain.Review;
+import com.example.UMC6th.domain.mapping.MemberMission;
 import com.example.UMC6th.service.MemberService.MemberCommandService;
 import com.example.UMC6th.service.MemberService.MemberQueryService;
 import com.example.UMC6th.validation.annotation.ExistMember;
@@ -44,9 +45,26 @@ public class MemberRestController {
             @Parameter(name = "memberId", description = "멤버 아이디, path variable 입니다."),
             @Parameter(name = "page", description = "페이지 번호, 0번이 1페이지 입니다.")
     })
-    public ApiResponse<MemberResponseDTO.MemberReviewListDTO> getMemberReviews(@PathVariable("memberId") Long memberId,
-                                                                                @ExistMember @RequestParam(name = "page") Integer page){
+    public ApiResponse<MemberResponseDTO.MemberReviewListDTO> getMemberReviews(@ExistMember@PathVariable("memberId") Long memberId,
+                                                                               @RequestParam(name = "page") Integer page){
         Page<Review> memberReview = memberQueryService.findMemberReview(memberId, page);
         return ApiResponse.onSuccess(MemberConverter.toMemberReviewListDTO(memberReview));
+    }
+
+    @GetMapping("/{memberId}/missions")
+    @Operation(summary = "내가 진행중인 미션 목록 API", description = "내가 진행중인 미션 목록을 조회하는 API입니다. 페이징을 포함하고 Query String으로 페이지 번호를 주세요.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "멤버가 없습니다", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MISSION4001", description = "미션이 없습니다.", content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
+    @Parameters({
+            @Parameter(name = "memberId", description = "멤버 아이디, path variable 입니다."),
+            @Parameter(name = "page", description = "페이지 번호, 0번이 1페이지 입니다.")
+    })
+    public ApiResponse<MemberResponseDTO.MemberMissionListDTO> getMemberProgressMissions(@ExistMember @PathVariable(name = "memberId") Long memberId,
+                                                                                         @RequestParam(name = "page") Integer page){
+        Page<MemberMission> progressMission = memberQueryService.findProgressMission(memberId, page);
+        return ApiResponse.onSuccess(MemberConverter.toMemberMissionListDTO(progressMission));
     }
 }
