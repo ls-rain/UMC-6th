@@ -1,12 +1,16 @@
 package com.example.UMC6th.converter;
 
 import com.example.UMC6th.domain.Member;
+import com.example.UMC6th.domain.Review;
 import com.example.UMC6th.domain.enums.Gender;
 import com.example.UMC6th.web.dto.MemberRequestDTO;
 import com.example.UMC6th.web.dto.MemberResponseDTO;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MemberConverter {
     public static MemberResponseDTO.JoinResultDTO toJoinResultDTO(Member member) {
@@ -39,5 +43,23 @@ public class MemberConverter {
                 .memberPreferList(new ArrayList<>())
                 .build();
 
+    }
+
+    public static MemberResponseDTO.MemberReviewDTO toMemberReviewDTO(Review review) {
+        return MemberResponseDTO.MemberReviewDTO.builder()
+                .name(review.getMember().getName())
+                .storeName(review.getStore().getName())
+                .score(review.getScore())
+                .body(review.getBody())
+                .createdAt(review.getCreatedAt())
+                .build();
+    }
+
+    public static MemberResponseDTO.MemberReviewListDTO toMemberReviewListDTO(Page<Review> reviewList) {
+        List<MemberResponseDTO.MemberReviewDTO> memberReviewDTOList = reviewList.stream().map(MemberConverter::toMemberReviewDTO).collect(Collectors.toList());
+        return MemberResponseDTO.MemberReviewListDTO.builder()
+                .reviewNum(memberReviewDTOList.size())
+                .reviewList(memberReviewDTOList)
+                .build();
     }
 }
